@@ -1,0 +1,64 @@
+syntax="proto3";
+
+package calculator;
+
+option java_multiple_files=true;
+option java_package="com.proto.calculator";
+
+
+message SumAPIRequest{
+    int32 op1=1;
+    int32 op2=2;
+}
+
+message SumAPIResponse{
+    int64 res=1;
+}
+
+
+message PrimeNumberDecompositionAPIRequest{
+    int64 op1=1;
+}
+
+
+message PrimeNumberDecompositionAPIResponse{
+    int64 result=1;
+}
+
+
+message ComputeAverageAPIRequest{
+    double op1=1;
+}
+
+
+message ComputeAverageAPIResponse{
+    double result=1;
+}
+
+
+message FindMaximumAPIRequest{
+    int64 op1=1;
+}
+
+
+message FindMaximumAPIResponse{
+    int64 result=1;
+}
+
+
+service CalculatorService{
+
+    //UNARY API
+    rpc SumAPI(SumAPIRequest) returns (SumAPIResponse){};
+
+    //SERVER STREAMING API
+    rpc PrimeNumberDecompositionAPI (PrimeNumberDecompositionAPIRequest) returns (stream PrimeNumberDecompositionAPIResponse) {};
+
+    //CLIENT STREAMING API
+    rpc ComputeAverageAPI (stream ComputeAverageAPIRequest) returns (ComputeAverageAPIResponse){};
+
+    //BIDIRECTIONAL STREAMING API
+    rpc FindMaximumAPI (stream FindMaximumAPIRequest) returns (stream FindMaximumAPIResponse){};
+
+
+}

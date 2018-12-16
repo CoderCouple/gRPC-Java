@@ -1,0 +1,73 @@
+syntax="proto3";
+
+package blog;
+
+option java_multiple_files=true;
+option java_package="com.proto.blog";
+option optimize_for = SPEED;
+
+message Blog{
+    string id=1;
+    string author=2;
+    string title=3;
+    string content=4;
+}
+
+message CreateBlogRequest{
+    Blog blog=1; //this does not have the ID
+}
+
+message CreateBlogResponse{
+    Blog blog=1; //this will have the ID
+}
+
+message ReadBlogRequest {
+    string id =1;
+}
+
+message ReadBlogResponse{
+    Blog blog =1;
+}
+
+message UpdateBlogRequest{
+    Blog blog =1;
+}
+
+message UpdateBlogResponse{
+    Blog blog =1;
+}
+
+message DeleteBlogRequest{
+    string id=1;
+}
+
+message DeleteBlogResponse{
+    int64 row_count=1;
+}
+
+message ListBlogRequest{
+
+}
+
+message ListBlogResponse{
+    Blog blog=1;
+}
+
+service BlogService{
+
+    //Create the blog
+    rpc CreateBlog (CreateBlogRequest) returns (CreateBlogResponse){};
+
+    //Read the blog
+    rpc ReadBlog (ReadBlogRequest) returns (ReadBlogResponse) {}; // Returns NOT_FOUND if the blog is not found
+
+    //Update the blog
+    rpc UpdateBlog (UpdateBlogRequest) returns (UpdateBlogResponse) {}; // Returns NOT_FOUND if the blog is not found
+
+    //delete the blog
+    rpc DeleteBlog (DeleteBlogRequest) returns (DeleteBlogResponse) {}; // Returns NOT_FOUND if the blog is not found
+
+    //List all the blogs
+    rpc ListAllBlogs (ListBlogRequest) returns (stream ListBlogResponse) {};
+
+}
